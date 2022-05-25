@@ -17,7 +17,7 @@ db.once('open', function () {
 
 const app = express();
 app.use(cors());
-
+app.use(express.json());
 const PORT = process.env.PORT || 3002;
 
 app.get('/', (request, response) => {
@@ -25,6 +25,8 @@ app.get('/', (request, response) => {
 })
 
 app.get('/books', getBooks);
+
+app.post('/books', postBooks);
 
 async function getBooks(req, res, next) {
   let bookQuery = {};
@@ -36,6 +38,16 @@ async function getBooks(req, res, next) {
   try {
     let results = await Book.find(bookQuery);
     res.status(200).send(results);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function postBooks(req, res, next) {
+  try {
+    let submittedBook = await Book.create(req.body);
+    console.log(submittedBook);
+    res.status(200).send(submittedBook);
   } catch (error) {
     next(error);
   }
