@@ -28,6 +28,8 @@ app.get('/books', getBooks);
 
 app.post('/books', postBooks);
 
+app.delete('/books', deleteBooks);
+
 async function getBooks(req, res, next) {
   let bookQuery = {};
   if (req.query.title) {
@@ -53,8 +55,16 @@ async function postBooks(req, res, next) {
   }
 }
 
+async function deleteBooks(id) {
+  try{
+    
+  } catch(error) {
+    next(error);
+  }
+}
+
 app.get('*', (request, response) => {
-  response.status(404).send('Not availabe');
+  response.status(404).send('Not available');
 })
 
 app.get('/test', (request, response) => {
