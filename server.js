@@ -30,7 +30,7 @@ app.post('/books', postBooks);
 
 app.delete('/books/:id', deleteBooks);
 
-app.put('./books/:id', putBooks);
+app.put('/books/:id', putBooks);
 
 async function getBooks(req, res, next) {
   let bookQuery = {};
@@ -71,7 +71,7 @@ async function putBooks(req, res, next) {
     let id = req.params.id;
     let updatedBookData = req.body;
 
-    let updatedBook = await Book.findByIdAndUpdate(id, req.body, { new: true, overwrite: true });
+    let updatedBook = await Book.findByIdAndUpdate(id, updatedBookData, { new: true, overwrite: true });
     res.status(200).send(updatedBook);
   } catch(error) {
     next(error);
